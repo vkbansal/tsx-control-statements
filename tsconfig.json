@@ -17,7 +17,8 @@
     "pretty": true,
     "noErrorTruncation": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true
   },
   "include": ["./src"],
   "exclude": ["node_modules"]

@@ -1,9 +1,12 @@
 {
   "name": "@vkbansal/tsx-control-statements",
   "version": "0.1.0",
-  "main": "index.js",
   "author": "Vivek Kumar Bansal <vkb0310@gmail.com>",
   "license": "MIT",
+  "main": "./lib/components.js",
+  "module": "./esm/components.js",
+  "esnext": "./esnext/components.js",
+  "typings": "./esm/components.d.ts",
   "scripts": {
     "test": "jest src",
     "lint": "eslint --ext .ts --ext .jsx src",
@@ -14,6 +17,14 @@
     "build:esnext": "rimraf ./esnext && tsc --project tsconfig.build.json --target es6 --module es6 --outDir ./esnext",
     "prepublishOnly": "yarn run build",
     "preversion": "yarn lint && yarn prettier && yarn test"
+  },
+  "files": [
+    "ems",
+    "esnext",
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "@types/react": ">=16.0.0",
