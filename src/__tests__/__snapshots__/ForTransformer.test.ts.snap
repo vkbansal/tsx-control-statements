@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<If /> tests transforms <If /> 1`] = `
+File: ForStatement.tsx
+
+Content:
+
+import React from 'react';
+
+import { For } from '../../components';
+
+export function ForStatement() {
+  return (
+    <div>
+      <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
+      <For items={[1, 2, 3, 4, 5]}>
+        {function(item) {
+          return <div key={item}>{item}</div>;
+        }}
+      </For>
+    </div>
+  );
+}
+
+
+Code before Transform:
+
+import React from 'react';
+import { For } from '../../components';
+export function ForStatement() {
+  return (
+    <div>
+      <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
+      <For items={[1, 2, 3, 4, 5]}>
+        {function(item) {
+          return <div key={item}>{item}</div>;
+        }}
+      </For>
+    </div>
+  );
+}
+
+
+Code after Transform: 
+
+import React from 'react';
+import { For } from '../../components';
+export function ForStatement() {
+  return (
+    <div>
+      {[1, 2, 3, 4, 5].map((item) => (
+        <div key={item}>{item}</div>
+      ))}
+      {[1, 2, 3, 4, 5].map(function(item) {
+        return <div key={item}>{item}</div>;
+      })}
+    </div>
+  );
+}
+
+`;

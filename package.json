@@ -1,0 +1,42 @@
+{
+  "name": "@vkbansal/tsx-control-statements",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Vivek Kumar Bansal <vkb0310@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest src",
+    "lint": "eslint --ext .ts --ext .jsx src",
+    "fmtc": "prettier --check 'src/**/*.{ts,tsx}'",
+    "build": "yarn run build:esm && yarn run build:cjs && yarn run build:esnext",
+    "build:esm": "rimraf ./esm && tsc --project tsconfig.build.json --target es5 --module es6 --outDir ./esm",
+    "build:cjs": "rimraf ./lib && tsc --project tsconfig.build.json --target es5 --module commonjs --outDir ./lib",
+    "build:esnext": "rimraf ./esnext && tsc --project tsconfig.build.json --target es6 --module es6 --outDir ./esnext",
+    "prepublishOnly": "yarn run build",
+    "preversion": "yarn lint && yarn prettier && yarn test"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.0.0",
+    "react": ">=16.0.0",
+    "typescript": ">=3.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.3.2",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "@types/prettier": "^1.19.0",
+    "@types/react": "~16.9.13",
+    "@typescript-eslint/eslint-plugin": "~2.9.0",
+    "@typescript-eslint/parser": "~2.9.0",
+    "eslint": "~6.7.1",
+    "eslint-prettier-config": "~1.0.1",
+    "jest": "~24.9.0",
+    "prettier": "~1.19.1",
+    "react": "~16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "rimraf": "^3.0.0",
+    "ts-jest": "~24.2.0",
+    "typescript": "~3.7.2"
+  }
+}
