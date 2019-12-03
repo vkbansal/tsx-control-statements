@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Choose, When, Otherwise, If } from '../../components';
+import { Choose, When, Otherwise, If } from '@vkbansal/tsx-control-statements';
 
 export interface ChooseStatementProps {
   name?: string;
 }
 
-export function ChooseStatement(props: ChooseStatementProps) {
+export function ChooseStatement(props: ChooseStatementProps): React.ReactElement {
   return (
     <div>
       <Choose>

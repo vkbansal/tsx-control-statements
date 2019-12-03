@@ -7,9 +7,9 @@ Content:
 
 import React from 'react';
 
-import { For } from '../../components';
+import { For } from '@vkbansal/tsx-control-statements';
 
-export function ForStatement() {
+export function ForStatement(): React.ReactElement {
   return (
     <div>
       <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
@@ -26,8 +26,8 @@ export function ForStatement() {
 Code before Transform:
 
 import React from 'react';
-import { For } from '../../components';
-export function ForStatement() {
+import { For } from '@vkbansal/tsx-control-statements';
+export function ForStatement(): React.ReactElement {
   return (
     <div>
       <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
@@ -44,8 +44,7 @@ export function ForStatement() {
 Code after Transform: 
 
 import React from 'react';
-import { For } from '../../components';
-export function ForStatement() {
+export function ForStatement(): React.ReactElement {
   return (
     <div>
       {[1, 2, 3, 4, 5].map((item) => (

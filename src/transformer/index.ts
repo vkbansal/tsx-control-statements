@@ -4,18 +4,27 @@ import ifTransformer from './ifTransformer';
 import chooseTransformer from './chooseTransformer';
 import forTransformer from './forTransformer';
 
+const IMPORT_REGEX = /@vkbansal\/tsx-control-statements/;
+
 export default function transformer(
   context: ts.TransformationContext
 ): ts.Transformer<ts.SourceFile> {
-  function visitor(this: ts.SourceFile, node: ts.Node) {
+  let isImported = false;
+
+  function visitor(this: ts.SourceFile, node: ts.Node): ts.Node {
+    if (ts.isImportDeclaration(node) && IMPORT_REGEX.test(node.moduleSpecifier.getText(this))) {
+      isImported = true;
+      return ts.createEmptyStatement();
+    }
+
     if (ts.isJsxElement(node)) {
       switch (node.openingElement.tagName.getText(this)) {
         case 'If':
-          return ifTransformer.call(this, node, visitor.bind(this));
+          return isImported ? ifTransformer.call(this, node, visitor.bind(this)) : node;
         case 'Choose':
-          return chooseTransformer.call(this, node, visitor.bind(this));
+          return isImported ? chooseTransformer.call(this, node, visitor.bind(this)) : node;
         case 'For':
-          return forTransformer.call(this, node, visitor.bind(this));
+          return isImported ? forTransformer.call(this, node, visitor.bind(this)) : node;
       }
     }
 

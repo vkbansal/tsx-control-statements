@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { If } from '../../components';
+import { If } from '@vkbansal/tsx-control-statements';
 
 export interface IfStatementProps {
   name?: string;
 }
 
-export function IfStatement(props: IfStatementProps) {
+export function IfStatement(props: IfStatementProps): React.ReactElement {
   return (
     <div>
       {/* Single String */}

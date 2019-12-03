@@ -58,7 +58,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --rulesdir ./scripts/lint",
+      "eslint",
       "prettier --check",
       "sh tools/typecheck-staged.sh"
     ]

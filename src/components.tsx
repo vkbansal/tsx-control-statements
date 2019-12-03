@@ -42,7 +42,7 @@ export function Choose(props: ChooseProps): React.ReactElement | null {
     }
 
     if (
-      React.isValidElement<OtherWiseProps>(child) &&
+      React.isValidElement<OtherwiseProps>(child) &&
       (child.type as typeof Otherwise).__ControlStatement === Otherwise.__ControlStatement
     ) {
       return <React.Fragment>{child}</React.Fragment>;
@@ -65,11 +65,11 @@ export function When(props: WhenProps): React.ReactElement | null {
 
 When.__ControlStatement = Symbol('When');
 
-export interface OtherWiseProps {
+export interface OtherwiseProps {
   children: React.ReactNode;
 }
 
-export function Otherwise(props: OtherWiseProps): React.ReactElement | null {
+export function Otherwise(props: OtherwiseProps): React.ReactElement | null {
   return <React.Fragment>{props.children}</React.Fragment>;
 }
 

@@ -18,7 +18,10 @@
     "noErrorTruncation": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@vkbansal/tsx-control-statements": ["components"]
+    }
   },
   "include": ["./src"],
   "exclude": ["node_modules"]
