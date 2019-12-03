@@ -1,6 +1,6 @@
 {
   "name": "@vkbansal/tsx-control-statements",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Vivek Kumar Bansal <vkb0310@gmail.com>",
   "license": "MIT",
   "main": "./lib/components.js",
