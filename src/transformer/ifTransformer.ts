@@ -6,7 +6,7 @@ export default function ifTransformer(
   this: ts.SourceFile,
   node: ts.JsxElement,
   visitor: ts.Visitor
-) {
+): ts.Node {
   const terinary = createNestedTerinaryExpression.call(this, [node], null, visitor);
 
   return node.parent && ts.isJsxElement(node.parent)

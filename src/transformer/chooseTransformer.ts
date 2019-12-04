@@ -6,7 +6,7 @@ export default function chooseTransformer(
   this: ts.SourceFile,
   node: ts.JsxElement,
   visitor: ts.Visitor
-) {
+): ts.Node {
   const whenElements: ts.JsxElement[] = [];
   let otherwiseElement: ts.JsxElement | null = null;
 
