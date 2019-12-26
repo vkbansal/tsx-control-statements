@@ -59,6 +59,7 @@ export function ForStatement(): React.ReactElement {
           );
         }}
       </For>
+      <For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
     </div>
   );
 }
@@ -116,6 +117,7 @@ export function ForStatement(): React.ReactElement {
           );
         }}
       </For>
+      <For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
     </div>
   );
 }
@@ -164,6 +166,9 @@ export function ForStatement(): React.ReactElement {
           </React.Fragment>
         ) : null;
       })}
+      {[1, 2].map((k) => (
+        <div>{k}</div>
+      ))}
     </div>
   );
 }

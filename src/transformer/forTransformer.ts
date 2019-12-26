@@ -18,6 +18,9 @@ export default function forTransformer(
 
   const firstChild = children[0];
 
+  /**
+   * Check if first-child is a JSXExpression and the expression is defined
+   */
   if (
     items &&
     ts.isJsxAttribute(items) &&
@@ -27,48 +30,71 @@ export default function forTransformer(
     firstChild &&
     firstChild.expression
   ) {
-    if (children.length > 0) {
-      let funcExpression = firstChild.expression;
+    const { expression } = firstChild;
+    let newExpression: ts.Expression = expression;
 
-      if (ts.isArrowFunction(funcExpression)) {
-        funcExpression = ts.createArrowFunction(
-          funcExpression.modifiers,
-          funcExpression.typeParameters,
-          funcExpression.parameters,
-          funcExpression.type,
-          funcExpression.equalsGreaterThanToken,
-          ts.isBlock(funcExpression.body)
-            ? ts.createBlock(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                funcExpression.body.statements.map(visitor.bind(this)!) as ts.Statement[]
-              )
-            : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              (funcExpression.body.forEachChild(visitor.bind(this)!) as ts.ConciseBody)
-        );
-      }
+    // if expression is an arrow function
+    if (ts.isArrowFunction(expression)) {
+      let body: ts.Expression | ts.Block | ts.EmptyStatement = ts.createEmptyStatement();
 
-      if (ts.isFunctionExpression(funcExpression)) {
-        funcExpression = ts.createFunctionExpression(
-          funcExpression.modifiers,
-          funcExpression.asteriskToken,
-          funcExpression.name,
-          funcExpression.typeParameters,
-          funcExpression.parameters,
-          funcExpression.type,
+      if (ts.isJsxElement(expression.body)) {
+        // if body is JSXElement
+
+        // () => <div/>
+        body = visitor.call(this, expression.body) as ts.Expression;
+      } else if (ts.isBlock(expression.body)) {
+        body = ts.createBlock(
+          // if body is Block
+          // () => {
+          //  return <div/>
+          // }
+
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ts.createBlock(funcExpression.body.statements.map(visitor.bind(this)!) as ts.Statement[])
+          expression.body.statements.map(visitor.bind(this)!) as ts.Statement[]
         );
+      } else if (ts.isParenthesizedExpression(expression.body)) {
+        // if body is ParenthesizedExpression
+        // () => (<div/>)
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        body = expression.body.forEachChild(visitor.bind(this)!) as ts.ConciseBody;
+      } else {
+        body = expression.body;
       }
 
-      const func = ts.createCall(
-        ts.createPropertyAccess(items.initializer.expression, 'map'),
-        undefined,
-        [funcExpression]
+      newExpression = ts.createArrowFunction(
+        expression.modifiers,
+        expression.typeParameters,
+        expression.parameters,
+        expression.type,
+        expression.equalsGreaterThanToken,
+        body
       );
-      return node.parent && ts.isJsxElement(node.parent)
-        ? ts.createJsxExpression(undefined, func)
-        : func;
     }
+
+    // if expression is an regular function
+    if (ts.isFunctionExpression(expression)) {
+      newExpression = ts.createFunctionExpression(
+        expression.modifiers,
+        expression.asteriskToken,
+        expression.name,
+        expression.typeParameters,
+        expression.parameters,
+        expression.type,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        ts.createBlock(expression.body.statements.map(visitor.bind(this)!) as ts.Statement[])
+      );
+    }
+
+    const func = ts.createCall(
+      ts.createPropertyAccess(items.initializer.expression, 'map'),
+      undefined,
+      [newExpression]
+    );
+
+    return node.parent && ts.isJsxElement(node.parent)
+      ? ts.createJsxExpression(undefined, func)
+      : func;
   }
 
   return node;

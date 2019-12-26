@@ -52,6 +52,7 @@ export function ForStatement(): React.ReactElement {
           );
         }}
       </For>
+      <For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
     </div>
   );
 }
