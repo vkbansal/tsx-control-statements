@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/vkbansal/tsx-control-statements/compare/v0.1.2...v0.1.3) (2019-12-26)
+
+
+### Bug Fixes
+
+* handle JSXElement body in <For/> ([7500bd0](https://github.com/vkbansal/tsx-control-statements/commit/7500bd0b95a9e5a307cd0434cf3d07cc03ea67cd))
+
 ### [0.1.2](https://github.com/vkbansal/tsx-control-statements/compare/v0.1.1...v0.1.2) (2019-12-04)
 
 
