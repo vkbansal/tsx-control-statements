@@ -33,7 +33,7 @@ export function ForStatement(): React.ReactElement {
         }}
       </For>
       <For items={[1, 2, 3, 4, 5]}>
-        {function(item) {
+        {function (item) {
           return (
             <If condition={item > 3}>
               <div key={item}>{item}</div>
@@ -42,7 +42,7 @@ export function ForStatement(): React.ReactElement {
         }}
       </For>
       <For items={[1, 2, 3, 4, 5]}>
-        {function(item) {
+        {function (item) {
           const a = item;
 
           return (
