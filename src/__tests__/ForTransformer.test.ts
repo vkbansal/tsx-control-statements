@@ -56,7 +56,7 @@ describe('<If /> tests', () => {
               }}
             </For>
             <For items={[1, 2, 3, 4, 5]}>
-              {function(item) {
+              {function (item) {
                 return (
                   <If condition={item > 3}>
                     <div key={item}>{item}</div>
@@ -65,7 +65,7 @@ describe('<If /> tests', () => {
               }}
             </For>
             <For items={[1, 2, 3, 4, 5]}>
-              {function(item) {
+              {function (item) {
                 const a = item;
 
                 return (
