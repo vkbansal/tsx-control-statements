@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/vkbansal/tsx-control-statements/compare/v0.1.3...v1.0.0) (2020-12-08)
+
+
+### Features
+
+* update for TS 4.0 and React 17 ([9d4563e](https://github.com/vkbansal/tsx-control-statements/commit/9d4563e5a35c61b7c4956657f3a46d5658b1935b))
+
 ### [0.1.3](https://github.com/vkbansal/tsx-control-statements/compare/v0.1.2...v0.1.3) (2019-12-26)
 
 
