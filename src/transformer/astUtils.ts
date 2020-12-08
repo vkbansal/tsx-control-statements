@@ -56,7 +56,13 @@ export function createNestedTerinaryExpression(
           )
         : context.factory.createNull();
 
-    return ts.createConditional(condition.initializer.expression, whenTrue, whenFalse);
+    return context.factory.createConditionalExpression(
+      condition.initializer.expression,
+      undefined,
+      whenTrue,
+      undefined,
+      whenFalse
+    );
   }
 
   return context.factory.createNull();
