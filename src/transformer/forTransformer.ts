@@ -2,6 +2,7 @@ import ts from 'typescript';
 
 export default function forTransformer(
   this: ts.SourceFile,
+  context: ts.TransformationContext,
   node: ts.JsxElement,
   visitor: ts.Visitor
 ): ts.Node {
@@ -43,7 +44,7 @@ export default function forTransformer(
         // () => <div/>
         body = visitor.call(this, expression.body) as ts.Expression;
       } else if (ts.isBlock(expression.body)) {
-        body = ts.createBlock(
+        body = context.factory.createBlock(
           // if body is Block
           // () => {
           //  return <div/>
@@ -62,7 +63,7 @@ export default function forTransformer(
         body = expression.body;
       }
 
-      newExpression = ts.createArrowFunction(
+      newExpression = context.factory.createArrowFunction(
         expression.modifiers,
         expression.typeParameters,
         expression.parameters,
@@ -74,26 +75,28 @@ export default function forTransformer(
 
     // if expression is an regular function
     if (ts.isFunctionExpression(expression)) {
-      newExpression = ts.createFunctionExpression(
+      newExpression = context.factory.createFunctionExpression(
         expression.modifiers,
         expression.asteriskToken,
         expression.name,
         expression.typeParameters,
         expression.parameters,
         expression.type,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        ts.createBlock(expression.body.statements.map(visitor.bind(this)!) as ts.Statement[])
+        context.factory.createBlock(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          expression.body.statements.map(visitor.bind(this)!) as ts.Statement[]
+        )
       );
     }
 
-    const func = ts.createCall(
-      ts.createPropertyAccess(items.initializer.expression, 'map'),
+    const func = context.factory.createCallExpression(
+      context.factory.createPropertyAccessExpression(items.initializer.expression, 'map'),
       undefined,
       [newExpression]
     );
 
     return node.parent && ts.isJsxElement(node.parent)
-      ? ts.createJsxExpression(undefined, func)
+      ? context.factory.createJsxExpression(undefined, func)
       : func;
   }
 

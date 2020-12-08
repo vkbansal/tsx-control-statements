@@ -13,15 +13,15 @@ export interface TransformTest {
 }
 
 export const serializer: jest.SnapshotSerializerPlugin = {
-  test(obj: any): obj is TransformTest {
-    return obj && obj.type === tsControlStatementsTest;
+  test(obj: unknown): obj is TransformTest {
+    return typeof obj === 'object' && (obj as TransformTest)?.type === tsControlStatementsTest;
   },
-  print(obj: TransformTest): string {
+  print(obj: unknown): string {
     return [
-      `File: ${obj.filename}`,
-      `Content:\n\n${obj.content}`,
-      `Code before Transform:\n\n${obj.source}`,
-      `Code after Transform: \n\n${obj.transformed}`
+      `File: ${(obj as TransformTest).filename}`,
+      `Content:\n\n${(obj as TransformTest).content}`,
+      `Code before Transform:\n\n${(obj as TransformTest).source}`,
+      `Code after Transform: \n\n${(obj as TransformTest).transformed}`
     ].join('\n\n');
   }
 };
@@ -29,7 +29,7 @@ export const serializer: jest.SnapshotSerializerPlugin = {
 export async function getTransformedCode(
   content: string,
   filename: string,
-  transformers: ts.TransformerFactory<any>[]
+  transformers: ts.TransformerFactory<ts.SourceFile>[]
 ): Promise<TransformTest> {
   const sourceFile = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest, true);
   const source = printer.printFile(sourceFile);

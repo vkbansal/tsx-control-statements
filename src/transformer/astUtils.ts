@@ -1,20 +1,26 @@
 import ts from 'typescript';
 
 export function getChildrenWrappedInFragmentElement(
+  context: ts.TransformationContext,
   node: ts.JsxChild[],
   fragment = 'React.Fragment'
 ): ts.JsxElement | ts.NullLiteral {
   return node.length > 0
-    ? ts.createJsxElement(
-        ts.createJsxOpeningElement(ts.createIdentifier(fragment), [], ts.createJsxAttributes([])),
+    ? context.factory.createJsxElement(
+        context.factory.createJsxOpeningElement(
+          context.factory.createIdentifier(fragment),
+          [],
+          context.factory.createJsxAttributes([])
+        ),
         node,
-        ts.createJsxClosingElement(ts.createIdentifier(fragment))
+        context.factory.createJsxClosingElement(context.factory.createIdentifier(fragment))
       )
-    : ts.createNull();
+    : context.factory.createNull();
 }
 
 export function createNestedTerinaryExpression(
   this: ts.SourceFile,
+  context: ts.TransformationContext,
   nodes: ts.JsxElement[],
   fallback: ts.JsxElement | null,
   visitor: ts.Visitor
@@ -33,20 +39,25 @@ export function createNestedTerinaryExpression(
     condition.initializer.expression
   ) {
     const children = node.children.map(visitor.bind(this)) as ts.JsxChild[];
-    const whenTrue = ts.createParen(getChildrenWrappedInFragmentElement(children));
+    const whenTrue = context.factory.createParenthesizedExpression(
+      getChildrenWrappedInFragmentElement(context, children)
+    );
     const whenFalse =
       restNodes.length > 0
-        ? ts.createParen(createNestedTerinaryExpression.call(this, restNodes, fallback, visitor))
+        ? context.factory.createParenthesizedExpression(
+            createNestedTerinaryExpression.call(this, context, restNodes, fallback, visitor)
+          )
         : fallback
-        ? ts.createParen(
+        ? context.factory.createParenthesizedExpression(
             getChildrenWrappedInFragmentElement(
+              context,
               fallback.children.map(visitor.bind(this)) as ts.JsxChild[]
             )
           )
-        : ts.createNull();
+        : context.factory.createNull();
 
     return ts.createConditional(condition.initializer.expression, whenTrue, whenFalse);
   }
 
-  return ts.createNull();
+  return context.factory.createNull();
 }

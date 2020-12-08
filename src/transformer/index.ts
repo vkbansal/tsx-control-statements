@@ -14,17 +14,19 @@ export default function transformer(
   function visitor(this: ts.SourceFile, node: ts.Node): ts.Node {
     if (ts.isImportDeclaration(node) && IMPORT_REGEX.test(node.moduleSpecifier.getText(this))) {
       isImported = true;
-      return ts.createEmptyStatement();
+      return context.factory.createEmptyStatement();
     }
 
     if (ts.isJsxElement(node)) {
       switch (node.openingElement.tagName.getText(this)) {
         case 'If':
-          return isImported ? ifTransformer.call(this, node, visitor.bind(this)) : node;
+          return isImported ? ifTransformer.call(this, context, node, visitor.bind(this)) : node;
         case 'Choose':
-          return isImported ? chooseTransformer.call(this, node, visitor.bind(this)) : node;
+          return isImported
+            ? chooseTransformer.call(this, context, node, visitor.bind(this))
+            : node;
         case 'For':
-          return isImported ? forTransformer.call(this, node, visitor.bind(this)) : node;
+          return isImported ? forTransformer.call(this, context, node, visitor.bind(this)) : node;
       }
     }
 

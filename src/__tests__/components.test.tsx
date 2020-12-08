@@ -6,15 +6,19 @@ import { If, For, Choose, When, Otherwise } from '../components';
 describe('component tests', () => {
   describe('<If /> tests ', () => {
     test('works with truthy condition', () => {
-      const { container } = render(<If condition={true}>I'm inside a truthy condition</If>);
+      const { container } = render(<If condition={true}>I&apos;m inside a truthy condition</If>);
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          I'm inside a truthy condition
+        </div>
+      `);
     });
 
     test('works with falsy condition', () => {
-      const { container } = render(<If condition={false}>I'm inside a falsy condition</If>);
+      const { container } = render(<If condition={false}>I&apos;m inside a falsy condition</If>);
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`<div />`);
     });
   });
 
@@ -24,27 +28,63 @@ describe('component tests', () => {
         <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
       );
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <div>
+            1
+          </div>
+          <div>
+            2
+          </div>
+          <div>
+            3
+          </div>
+          <div>
+            4
+          </div>
+          <div>
+            5
+          </div>
+        </div>
+      `);
     });
 
     test('works with normal function', () => {
       const { container } = render(
         <For items={[1, 2, 3, 4, 5]}>
-          {function(item) {
+          {function (item) {
             return <div key={item}>{item}</div>;
           }}
         </For>
       );
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <div>
+            1
+          </div>
+          <div>
+            2
+          </div>
+          <div>
+            3
+          </div>
+          <div>
+            4
+          </div>
+          <div>
+            5
+          </div>
+        </div>
+      `);
     });
   });
 
   describe('<Choose /> tests ', () => {
     test('works with only <When /> and <OtherWise />', () => {
-      const { container } = render(<Choose>Hello {'world'.toUpperCase()} !}</Choose>);
+      const { container } = render(<Choose>Hello {'world'.toUpperCase()} !</Choose>);
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`<div />`);
     });
 
     test('works with <When />', () => {
@@ -56,7 +96,13 @@ describe('component tests', () => {
         </Choose>
       );
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          Hello 
+          WORLD
+           !
+        </div>
+      `);
     });
 
     test('works with <Otherwise />', () => {
@@ -68,7 +114,13 @@ describe('component tests', () => {
         </Choose>
       );
 
-      expect(container).toMatchSnapshot();
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          Hello 
+          WORLD
+           !
+        </div>
+      `);
     });
   });
 });

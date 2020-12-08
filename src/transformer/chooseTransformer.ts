@@ -4,6 +4,7 @@ import { createNestedTerinaryExpression } from './astUtils';
 
 export default function chooseTransformer(
   this: ts.SourceFile,
+  context: ts.TransformationContext,
   node: ts.JsxElement,
   visitor: ts.Visitor
 ): ts.Node {
@@ -30,13 +31,14 @@ export default function chooseTransformer(
   if (whenElements.length > 0) {
     const terinary = createNestedTerinaryExpression.call(
       this,
+      context,
       whenElements,
       otherwiseElement,
       visitor
     );
 
     return node.parent && ts.isJsxElement(node.parent)
-      ? ts.createJsxExpression(undefined, terinary)
+      ? context.factory.createJsxExpression(undefined, terinary)
       : terinary;
   }
 
