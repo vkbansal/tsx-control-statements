@@ -24,8 +24,7 @@
   },
   "files": [
     "ems",
-    "esnext",
-    "lib"
+    "cjs"
   ],
   "publishConfig": {
     "access": "public"
