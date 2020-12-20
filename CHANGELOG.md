@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/vkbansal/tsx-control-statements/compare/v1.0.0...v2.0.0) (2020-12-20)
+
+
+### Features
+
+* proper support for esm and cjs modules ([6d36a2f](https://github.com/vkbansal/tsx-control-statements/commit/6d36a2fe31fcf6d8df5ac3c11178146ddb16ec06))
+
+
+### Bug Fixes
+
+* deprecated ts method ([06ebf87](https://github.com/vkbansal/tsx-control-statements/commit/06ebf87898ded2a90862437d2bb3ba709b38f01c))
+
 ## [1.0.0](https://github.com/vkbansal/tsx-control-statements/compare/v0.1.3...v1.0.0) (2020-12-08)
 
 
