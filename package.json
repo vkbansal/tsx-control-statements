@@ -3,18 +3,22 @@
   "version": "1.0.0",
   "author": "Vivek Kumar Bansal <vkb0310@gmail.com>",
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./cjs/index.js",
   "module": "./esm/index.js",
-  "esnext": "./esnext/index.js",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.js",
+      "default": "./esm/index.js"
+    }
+  },
   "scripts": {
     "release": "standard-version",
     "test": "jest src",
     "lint": "eslint --ext .ts --ext .jsx src",
     "fmtc": "prettier --check 'src/**/*.{ts,tsx}'",
-    "build": "yarn run build:esm && yarn run build:cjs && yarn run build:esnext",
-    "build:esm": "rimraf ./esm && tsc --project tsconfig.build.json --target es5 --module es6 --outDir ./esm",
-    "build:cjs": "rimraf ./lib && tsc --project tsconfig.build.json --target es5 --module commonjs --outDir ./lib",
-    "build:esnext": "rimraf ./esnext && tsc --project tsconfig.build.json --target es6 --module es6 --outDir ./esnext",
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:esm": "rimraf ./esm && NODE_ENV=production tsc --project tsconfig.build.json --target es6 --module esnext --outDir ./esm",
+    "build:cjs": "rimraf ./lib && NODE_ENV=production tsc --project tsconfig.build.json --target es5 --module commonjs --outDir ./cjs",
     "prepublishOnly": "yarn run build",
     "preversion": "yarn lint && yarn prettier && yarn test"
   },
