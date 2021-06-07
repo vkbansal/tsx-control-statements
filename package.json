@@ -1,6 +1,6 @@
 {
   "name": "@vkbansal/tsx-control-statements",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "author": "Vivek Kumar Bansal <vkb0310@gmail.com>",
   "license": "MIT",
   "main": "./cjs/index.js",

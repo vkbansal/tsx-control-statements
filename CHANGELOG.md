@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/vkbansal/tsx-control-statements/compare/v2.0.2...v2.0.3) (2021-06-07)
+
+
+### Bug Fixes
+
+* files config ([833c44a](https://github.com/vkbansal/tsx-control-statements/commit/833c44a047e77a5104c3c2bfd3bf8db9c030113b))
+
 ### [2.0.2](https://github.com/vkbansal/tsx-control-statements/compare/v2.0.1...v2.0.2) (2021-06-07)
 
 
