@@ -23,7 +23,7 @@
     "preversion": "yarn lint && yarn prettier && yarn test"
   },
   "files": [
-    "ems",
+    "esm",
     "cjs"
   ],
   "publishConfig": {
