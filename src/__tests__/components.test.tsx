@@ -4,31 +4,31 @@ import { render } from '@testing-library/react';
 import { If, For, Choose, When, Otherwise } from '../components';
 
 describe('component tests', () => {
-  describe('<If /> tests ', () => {
-    test('works with truthy condition', () => {
-      const { container } = render(<If condition={true}>I&apos;m inside a truthy condition</If>);
+	describe('<If /> tests ', () => {
+		test('works with truthy condition', () => {
+			const { container } = render(<If condition={true}>I&apos;m inside a truthy condition</If>);
 
-      expect(container).toMatchInlineSnapshot(`
+			expect(container).toMatchInlineSnapshot(`
         <div>
           I'm inside a truthy condition
         </div>
       `);
-    });
+		});
 
-    test('works with falsy condition', () => {
-      const { container } = render(<If condition={false}>I&apos;m inside a falsy condition</If>);
+		test('works with falsy condition', () => {
+			const { container } = render(<If condition={false}>I&apos;m inside a falsy condition</If>);
 
-      expect(container).toMatchInlineSnapshot(`<div />`);
-    });
-  });
+			expect(container).toMatchInlineSnapshot(`<div />`);
+		});
+	});
 
-  describe('<For /> tests ', () => {
-    test('works with arrow function', () => {
-      const { container } = render(
-        <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
-      );
+	describe('<For /> tests ', () => {
+		test('works with arrow function', () => {
+			const { container } = render(
+				<For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>,
+			);
 
-      expect(container).toMatchInlineSnapshot(`
+			expect(container).toMatchInlineSnapshot(`
         <div>
           <div>
             1
@@ -47,18 +47,18 @@ describe('component tests', () => {
           </div>
         </div>
       `);
-    });
+		});
 
-    test('works with normal function', () => {
-      const { container } = render(
-        <For items={[1, 2, 3, 4, 5]}>
-          {function (item) {
-            return <div key={item}>{item}</div>;
-          }}
-        </For>
-      );
+		test('works with normal function', () => {
+			const { container } = render(
+				<For items={[1, 2, 3, 4, 5]}>
+					{function (item) {
+						return <div key={item}>{item}</div>;
+					}}
+				</For>,
+			);
 
-      expect(container).toMatchInlineSnapshot(`
+			expect(container).toMatchInlineSnapshot(`
         <div>
           <div>
             1
@@ -77,50 +77,50 @@ describe('component tests', () => {
           </div>
         </div>
       `);
-    });
-  });
+		});
+	});
 
-  describe('<Choose /> tests ', () => {
-    test('works with only <When /> and <OtherWise />', () => {
-      const { container } = render(<Choose>Hello {'world'.toUpperCase()} !</Choose>);
+	describe('<Choose /> tests ', () => {
+		test('works with only <When /> and <OtherWise />', () => {
+			const { container } = render(<Choose>Hello {'world'.toUpperCase()} !</Choose>);
 
-      expect(container).toMatchInlineSnapshot(`<div />`);
-    });
+			expect(container).toMatchInlineSnapshot(`<div />`);
+		});
 
-    test('works with <When />', () => {
-      const { container } = render(
-        <Choose>
-          <When condition={false}>Hello {'world'.toLowerCase()} 1 !</When>
-          <When condition={true}>Hello {'world'.toUpperCase()} !</When>
-          <When condition={false}>Hello {'world'.toLowerCase()} 2 !</When>
-        </Choose>
-      );
+		test('works with <When />', () => {
+			const { container } = render(
+				<Choose>
+					<When condition={false}>Hello {'world'.toLowerCase()} 1 !</When>
+					<When condition={true}>Hello {'world'.toUpperCase()} !</When>
+					<When condition={false}>Hello {'world'.toLowerCase()} 2 !</When>
+				</Choose>,
+			);
 
-      expect(container).toMatchInlineSnapshot(`
+			expect(container).toMatchInlineSnapshot(`
         <div>
           Hello 
           WORLD
            !
         </div>
       `);
-    });
+		});
 
-    test('works with <Otherwise />', () => {
-      const { container } = render(
-        <Choose>
-          <When condition={false}>Hello {'world'.toLowerCase()} 1 !</When>
-          <When condition={false}>Hello {'world'.toLowerCase()} 2 !</When>
-          <Otherwise>Hello {'world'.toUpperCase()} !</Otherwise>
-        </Choose>
-      );
+		test('works with <Otherwise />', () => {
+			const { container } = render(
+				<Choose>
+					<When condition={false}>Hello {'world'.toLowerCase()} 1 !</When>
+					<When condition={false}>Hello {'world'.toLowerCase()} 2 !</When>
+					<Otherwise>Hello {'world'.toUpperCase()} !</Otherwise>
+				</Choose>,
+			);
 
-      expect(container).toMatchInlineSnapshot(`
+			expect(container).toMatchInlineSnapshot(`
         <div>
           Hello 
           WORLD
            !
         </div>
       `);
-    });
-  });
+		});
+	});
 });

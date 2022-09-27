@@ -7,16 +7,16 @@ import { serializer, getTransformedCode } from './helpers';
 expect.addSnapshotSerializer(serializer);
 
 describe('<If /> tests', () => {
-  test('transforms <If />', async () => {
-    const filename = 'ForStatement.tsx';
-    const content = await fs.promises.readFile(
-      path.resolve(__dirname, 'fixtures', filename),
-      'utf-8'
-    );
+	test('transforms <If />', async () => {
+		const filename = 'ForStatement.tsx';
+		const content = await fs.promises.readFile(
+			path.resolve(__dirname, 'fixtures', filename),
+			'utf-8',
+		);
 
-    const code = await getTransformedCode(content, filename, [transformer]);
+		const code = await getTransformedCode(content, filename, [transformer]);
 
-    expect(code).toMatchInlineSnapshot(`
+		expect(code).toMatchInlineSnapshot(`
       File: ForStatement.tsx
 
       Content:
@@ -190,5 +190,5 @@ describe('<If /> tests', () => {
       }
 
     `);
-  });
+	});
 });
