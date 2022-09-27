@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { expect, describe, test } from 'vitest';
 
 import { If, For, Choose, When, Otherwise } from '../components';
 
 describe('component tests', () => {
 	describe('<If /> tests ', () => {
+		// @vitest-environment happy-dom
 		test('works with truthy condition', () => {
 			const { container } = render(<If condition={true}>I&apos;m inside a truthy condition</If>);
 
@@ -15,6 +17,7 @@ describe('component tests', () => {
       `);
 		});
 
+		// @vitest-environment happy-dom
 		test('works with falsy condition', () => {
 			const { container } = render(<If condition={false}>I&apos;m inside a falsy condition</If>);
 
@@ -23,6 +26,7 @@ describe('component tests', () => {
 	});
 
 	describe('<For /> tests ', () => {
+		// @vitest-environment happy-dom
 		test('works with arrow function', () => {
 			const { container } = render(
 				<For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>,
@@ -49,6 +53,7 @@ describe('component tests', () => {
       `);
 		});
 
+		// @vitest-environment happy-dom
 		test('works with normal function', () => {
 			const { container } = render(
 				<For items={[1, 2, 3, 4, 5]}>
@@ -81,12 +86,14 @@ describe('component tests', () => {
 	});
 
 	describe('<Choose /> tests ', () => {
+		// @vitest-environment happy-dom
 		test('works with only <When /> and <OtherWise />', () => {
 			const { container } = render(<Choose>Hello {'world'.toUpperCase()} !</Choose>);
 
 			expect(container).toMatchInlineSnapshot(`<div />`);
 		});
 
+		// @vitest-environment happy-dom
 		test('works with <When />', () => {
 			const { container } = render(
 				<Choose>
@@ -97,14 +104,15 @@ describe('component tests', () => {
 			);
 
 			expect(container).toMatchInlineSnapshot(`
-        <div>
-          Hello 
-          WORLD
-           !
-        </div>
-      `);
+				<div>
+				  Hello 
+				  WORLD
+				   !
+				</div>
+			`);
 		});
 
+		// @vitest-environment happy-dom
 		test('works with <Otherwise />', () => {
 			const { container } = render(
 				<Choose>
@@ -115,12 +123,12 @@ describe('component tests', () => {
 			);
 
 			expect(container).toMatchInlineSnapshot(`
-        <div>
-          Hello 
-          WORLD
-           !
-        </div>
-      `);
+				<div>
+				  Hello 
+				  WORLD
+				   !
+				</div>
+			`);
 		});
 	});
 });

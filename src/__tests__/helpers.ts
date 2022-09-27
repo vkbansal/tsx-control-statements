@@ -1,8 +1,11 @@
 import ts from 'typescript';
 import prettier from 'prettier';
+import type { expect } from 'vitest';
 
 const printer = ts.createPrinter();
 const tsControlStatementsTest = Symbol('ts-control-statements-test');
+
+type Plugin = Parameters<typeof expect.addSnapshotSerializer>[0];
 
 export interface TransformTest {
 	type: typeof tsControlStatementsTest;
@@ -12,11 +15,11 @@ export interface TransformTest {
 	transformed: string;
 }
 
-export const serializer: jest.SnapshotSerializerPlugin = {
+export const serializer: Plugin = {
 	test(obj: unknown): obj is TransformTest {
 		return typeof obj === 'object' && (obj as TransformTest)?.type === tsControlStatementsTest;
 	},
-	print(obj: unknown): string {
+	serialize(obj: unknown): string {
 		return [
 			`File: ${(obj as TransformTest).filename}`,
 			`Content:\n\n${(obj as TransformTest).content}`,

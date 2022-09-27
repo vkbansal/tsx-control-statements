@@ -1,5 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { expect, describe, test } from 'vitest';
 
 import transformer from '../transformer';
 import { serializer, getTransformedCode } from './helpers';
@@ -17,178 +18,177 @@ describe('<If /> tests', () => {
 		const code = await getTransformedCode(content, filename, [transformer]);
 
 		expect(code).toMatchInlineSnapshot(`
-      File: ForStatement.tsx
+			File: ForStatement.tsx
 
-      Content:
+			Content:
 
-      import React from 'react';
+			import React from 'react';
 
-      import { For, If } from '@vkbansal/tsx-control-statements';
+			import { For, If } from '@vkbansal/tsx-control-statements';
 
-      export function ForStatement(): React.ReactElement {
-        return (
-          <div>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => (
-                <If condition={item > 3}>
-                  <div key={item}>{item}</div>
-                </If>
-              )}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => {
-                return (
-                  <If condition={item > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => {
-                const a = item;
+			export function ForStatement(): React.ReactElement {
+				return (
+					<div>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => (
+								<If condition={item > 3}>
+									<div key={item}>{item}</div>
+								</If>
+							)}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => {
+								return (
+									<If condition={item > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => {
+								const a = item;
 
-                return (
-                  <If condition={a > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {function (item) {
-                return (
-                  <If condition={item > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {function (item) {
-                const a = item;
+								return (
+									<If condition={a > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{function (item) {
+								return (
+									<If condition={item > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{function (item) {
+								const a = item;
 
-                return (
-                  <If condition={a > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
-          </div>
-        );
-      }
-
-
-      Code before Transform:
-
-      import React from 'react';
-      import { For, If } from '@vkbansal/tsx-control-statements';
-      export function ForStatement(): React.ReactElement {
-        return (
-          <div>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => (
-                <If condition={item > 3}>
-                  <div key={item}>{item}</div>
-                </If>
-              )}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => {
-                return (
-                  <If condition={item > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {(item) => {
-                const a = item;
-                return (
-                  <If condition={a > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {function (item) {
-                return (
-                  <If condition={item > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2, 3, 4, 5]}>
-              {function (item) {
-                const a = item;
-                return (
-                  <If condition={a > 3}>
-                    <div key={item}>{item}</div>
-                  </If>
-                );
-              }}
-            </For>
-            <For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
-          </div>
-        );
-      }
+								return (
+									<If condition={a > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
+					</div>
+				);
+			}
 
 
-      Code after Transform: 
+			Code before Transform:
 
-      import React from 'react';
-      export function ForStatement(): React.ReactElement {
-        return (
-          <div>
-            {[1, 2, 3, 4, 5].map((item) =>
-              item > 3 ? (
-                <React.Fragment>
-                  <div key={item}>{item}</div>
-                </React.Fragment>
-              ) : null
-            )}
-            {[1, 2, 3, 4, 5].map((item) => {
-              return item > 3 ? (
-                <React.Fragment>
-                  <div key={item}>{item}</div>
-                </React.Fragment>
-              ) : null;
-            })}
-            {[1, 2, 3, 4, 5].map((item) => {
-              const a = item;
-              return a > 3 ? (
-                <React.Fragment>
-                  <div key={item}>{item}</div>
-                </React.Fragment>
-              ) : null;
-            })}
-            {[1, 2, 3, 4, 5].map(function (item) {
-              return item > 3 ? (
-                <React.Fragment>
-                  <div key={item}>{item}</div>
-                </React.Fragment>
-              ) : null;
-            })}
-            {[1, 2, 3, 4, 5].map(function (item) {
-              const a = item;
-              return a > 3 ? (
-                <React.Fragment>
-                  <div key={item}>{item}</div>
-                </React.Fragment>
-              ) : null;
-            })}
-            {[1, 2].map((k) => (
-              <div>{k}</div>
-            ))}
-          </div>
-        );
-      }
+			import React from 'react';
+			import { For, If } from '@vkbansal/tsx-control-statements';
+			export function ForStatement(): React.ReactElement {
+				return (
+					<div>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => (
+								<If condition={item > 3}>
+									<div key={item}>{item}</div>
+								</If>
+							)}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => {
+								return (
+									<If condition={item > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{(item) => {
+								const a = item;
+								return (
+									<If condition={a > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{function (item) {
+								return (
+									<If condition={item > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2, 3, 4, 5]}>
+							{function (item) {
+								const a = item;
+								return (
+									<If condition={a > 3}>
+										<div key={item}>{item}</div>
+									</If>
+								);
+							}}
+						</For>
+						<For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
+					</div>
+				);
+			}
 
-    `);
+
+			Code after Transform: 
+
+			import React from 'react';
+			export function ForStatement(): React.ReactElement {
+				return (
+					<div>
+						{[1, 2, 3, 4, 5].map((item) =>
+							item > 3 ? (
+								<React.Fragment>
+									<div key={item}>{item}</div>
+								</React.Fragment>
+							) : null,
+						)}
+						{[1, 2, 3, 4, 5].map((item) => {
+							return item > 3 ? (
+								<React.Fragment>
+									<div key={item}>{item}</div>
+								</React.Fragment>
+							) : null;
+						})}
+						{[1, 2, 3, 4, 5].map((item) => {
+							const a = item;
+							return a > 3 ? (
+								<React.Fragment>
+									<div key={item}>{item}</div>
+								</React.Fragment>
+							) : null;
+						})}
+						{[1, 2, 3, 4, 5].map(function (item) {
+							return item > 3 ? (
+								<React.Fragment>
+									<div key={item}>{item}</div>
+								</React.Fragment>
+							) : null;
+						})}
+						{[1, 2, 3, 4, 5].map(function (item) {
+							const a = item;
+							return a > 3 ? (
+								<React.Fragment>
+									<div key={item}>{item}</div>
+								</React.Fragment>
+							) : null;
+						})}
+						{[1, 2].map((k) => (
+							<div>{k}</div>
+						))}
+					</div>
+				);
+			}
+		`);
 	});
 });
