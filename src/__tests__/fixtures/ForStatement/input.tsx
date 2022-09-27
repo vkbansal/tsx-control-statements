@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { For, If } from '@vkbansal/tsx-control-statements';
 
 export function ForStatement(): React.ReactElement {
@@ -52,7 +51,7 @@ export function ForStatement(): React.ReactElement {
 					);
 				}}
 			</For>
-			<For items={[1, 2]}>{(k) => <div>{k}</div>}</For>
+			<For items={[1, 2]}>{(k) => <div key={k}>{k}</div>}</For>
 		</div>
 	);
 }

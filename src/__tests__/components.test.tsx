@@ -10,11 +10,7 @@ describe('component tests', () => {
 		test('works with truthy condition', () => {
 			const { container } = render(<If condition={true}>I&apos;m inside a truthy condition</If>);
 
-			expect(container).toMatchInlineSnapshot(`
-        <div>
-          I'm inside a truthy condition
-        </div>
-      `);
+			expect(container).toMatchSnapshot();
 		});
 
 		// @vitest-environment happy-dom
@@ -32,25 +28,7 @@ describe('component tests', () => {
 				<For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>,
 			);
 
-			expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div>
-            1
-          </div>
-          <div>
-            2
-          </div>
-          <div>
-            3
-          </div>
-          <div>
-            4
-          </div>
-          <div>
-            5
-          </div>
-        </div>
-      `);
+			expect(container).toMatchSnapshot();
 		});
 
 		// @vitest-environment happy-dom
@@ -63,25 +41,7 @@ describe('component tests', () => {
 				</For>,
 			);
 
-			expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div>
-            1
-          </div>
-          <div>
-            2
-          </div>
-          <div>
-            3
-          </div>
-          <div>
-            4
-          </div>
-          <div>
-            5
-          </div>
-        </div>
-      `);
+			expect(container).toMatchSnapshot();
 		});
 	});
 
@@ -103,13 +63,7 @@ describe('component tests', () => {
 				</Choose>,
 			);
 
-			expect(container).toMatchInlineSnapshot(`
-				<div>
-				  Hello 
-				  WORLD
-				   !
-				</div>
-			`);
+			expect(container).toMatchSnapshot();
 		});
 
 		// @vitest-environment happy-dom
@@ -122,13 +76,7 @@ describe('component tests', () => {
 				</Choose>,
 			);
 
-			expect(container).toMatchInlineSnapshot(`
-				<div>
-				  Hello 
-				  WORLD
-				   !
-				</div>
-			`);
+			expect(container).toMatchSnapshot();
 		});
 	});
 });

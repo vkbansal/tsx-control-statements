@@ -3,161 +3,23 @@ import path from 'node:path';
 import { expect, describe, test } from 'vitest';
 
 import transformer from '../transformer';
-import { serializer, getTransformedCode } from './helpers';
-
-expect.addSnapshotSerializer(serializer);
+import { getTransformedCode } from './helpers';
 
 describe('<Choose /> tests', () => {
 	test('transforms <Choose />', async () => {
 		const filename = 'ChooseStatement.tsx';
-		const content = await fs.promises.readFile(
-			path.resolve(__dirname, 'fixtures', filename),
+		const input = await fs.promises.readFile(
+			path.resolve(__dirname, 'fixtures/ChooseStatement/input.tsx'),
 			'utf-8',
 		);
 
-		const code = await getTransformedCode(content, filename, [transformer]);
+		const output = await fs.promises.readFile(
+			path.resolve(__dirname, 'fixtures/ChooseStatement/output.tsx'),
+			'utf-8',
+		);
 
-		expect(code).toMatchInlineSnapshot(`
-			File: ChooseStatement.tsx
+		const code = await getTransformedCode(input, filename, [transformer]);
 
-			Content:
-
-			import React from 'react';
-
-			import { Choose, When, Otherwise, If } from '@vkbansal/tsx-control-statements';
-
-			export interface ChooseStatementProps {
-				name?: string;
-			}
-
-			export function ChooseStatement(props: ChooseStatementProps): React.ReactElement {
-				return (
-					<div>
-						<Choose>
-							{/* Single String */}
-							<When condition={typeof props.name === 'string'}>Hello {props.name}</When>
-							{/* Single Component */}
-							<When condition={typeof props.name === 'string'}>
-								<div>Hello {props.name}</div>
-							</When>
-							{/* Single Self-closing Component */}
-							<When condition={typeof props.name === 'string'}>
-								<div />
-							</When>
-							{/* Multiple Components */}
-							<When condition={typeof props.name === 'string'}>
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								<div />
-							</When>
-							{/* Nested Components */}
-							<Otherwise>
-								<div />
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								<If condition={true}>
-									<div />
-									<If condition={true}>
-										<div />
-									</If>
-								</If>
-							</Otherwise>
-						</Choose>
-					</div>
-				);
-			}
-
-
-			Code before Transform:
-
-			import React from 'react';
-			import { Choose, When, Otherwise, If } from '@vkbansal/tsx-control-statements';
-			export interface ChooseStatementProps {
-				name?: string;
-			}
-			export function ChooseStatement(props: ChooseStatementProps): React.ReactElement {
-				return (
-					<div>
-						<Choose>
-							{/* Single String */}
-							<When condition={typeof props.name === 'string'}>Hello {props.name}</When>
-							{/* Single Component */}
-							<When condition={typeof props.name === 'string'}>
-								<div>Hello {props.name}</div>
-							</When>
-							{/* Single Self-closing Component */}
-							<When condition={typeof props.name === 'string'}>
-								<div />
-							</When>
-							{/* Multiple Components */}
-							<When condition={typeof props.name === 'string'}>
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								<div />
-							</When>
-							{/* Nested Components */}
-							<Otherwise>
-								<div />
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								<If condition={true}>
-									<div />
-									<If condition={true}>
-										<div />
-									</If>
-								</If>
-							</Otherwise>
-						</Choose>
-					</div>
-				);
-			}
-
-
-			Code after Transform: 
-
-			import React from 'react';
-			export interface ChooseStatementProps {
-				name?: string;
-			}
-			export function ChooseStatement(props: ChooseStatementProps): React.ReactElement {
-				return (
-					<div>
-						{typeof props.name === 'string' ? (
-							<React.Fragment>Hello {props.name}</React.Fragment>
-						) : typeof props.name === 'string' ? (
-							<React.Fragment>
-								<div>Hello {props.name}</div>
-							</React.Fragment>
-						) : typeof props.name === 'string' ? (
-							<React.Fragment>
-								<div />
-							</React.Fragment>
-						) : typeof props.name === 'string' ? (
-							<React.Fragment>
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								<div />
-							</React.Fragment>
-						) : (
-							<React.Fragment>
-								<div />
-								Hello {props.name}
-								<div>Hello {props.name}</div>
-								{true ? (
-									<React.Fragment>
-										<div />
-										{true ? (
-											<React.Fragment>
-												<div />
-											</React.Fragment>
-										) : null}
-									</React.Fragment>
-								) : null}
-							</React.Fragment>
-						)}
-					</div>
-				);
-			}
-		`);
+		expect(code.transformed).toEqual(output);
 	});
 });
