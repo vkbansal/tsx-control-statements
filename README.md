@@ -1,6 +1,6 @@
 # TSX control statements
 
-These are a set of components that provide basic control flow like **conditionals** and **loops** in JSX.
+These are a set of components that provide basic control flow like **conditionals** and **loops** in TSX.
 These components can be either used as is or can be transpiled to TypeScript expressions using provided transformer.
 
 It is recommened to use both the components and the transformer together because:
@@ -38,15 +38,15 @@ import React from 'react';
 import { If } from '@vkbansal/tsx-control-statements';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			<If condition={myBooleanCondition}>
-				<span>This will included only if condition is true</span>
-			</If>
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      <If condition={myBooleanCondition}>
+        <span>This will included only if condition is true</span>
+      </If>
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
@@ -56,17 +56,17 @@ function MyComponent() {
 import React from 'react';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			{myBooleanCondition ? (
-				<React.Fragment>
-					<span>This will included only if condition is true</span>
-				</React.Fragment>
-			) : null}
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      {myBooleanCondition ? (
+        <React.Fragment>
+          <span>This will included only if condition is true</span>
+        </React.Fragment>
+      ) : null}
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
@@ -79,15 +79,13 @@ import React from 'react';
 import { For } from '@vkbansal/tsx-control-statements';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			<For items={[1, 2, 3, 4, 5]}>
-				{(item) => <div key={item}>{item}</div>}
-			</For>
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      <For items={[1, 2, 3, 4, 5]}>{(item) => <div key={item}>{item}</div>}</For>
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
@@ -97,17 +95,17 @@ function MyComponent() {
 import React from 'react';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			<React.Fragment>
-				{[1, 2, 3, 4, 5].map((item) => (
-					<div key={item}>{item}</div>
-				))}
-			</React.Fragment>
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      <React.Fragment>
+        {[1, 2, 3, 4, 5].map((item) => (
+          <div key={item}>{item}</div>
+        ))}
+      </React.Fragment>
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
@@ -120,23 +118,17 @@ import React from 'react';
 import { Choose, When, Otherwise } from '@vkbansal/tsx-control-statements';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			<Choose>
-				<When condition={condition1}>
-					This will be shown when "condition1" is true
-				</When>
-				<When condition={condition2}>
-					This will be shown when "condition2" is true
-				</When>
-				<Otherwise>
-					This will be shown when both "condition1" and "condition2" are false
-				</Otherwise>
-			</Choose>
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      <Choose>
+        <When condition={condition1}>This will be shown when "condition1" is true</When>
+        <When condition={condition2}>This will be shown when "condition2" is true</When>
+        <Otherwise>This will be shown when both "condition1" and "condition2" are false</Otherwise>
+      </Choose>
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
@@ -146,25 +138,21 @@ function MyComponent() {
 import React from 'react';
 
 function MyComponent() {
-	return (
-		<div>
-			{/* component code... */}
-			{condition1 ? (
-				<React.Fragment>
-					This will be shown when "condition1" is true
-				</React.Fragment>
-			) : condition2 ? (
-				<React.Fragment>
-					This will be shown when "condition2" is true
-				</React.Fragment>
-			) : (
-				<React.Fragment>
-					This will be shown when both "condition1" and "condition2" are false
-				</React.Fragment>
-			)}
-			{/* component code... */}
-		</div>
-	);
+  return (
+    <div>
+      {/* component code... */}
+      {condition1 ? (
+        <React.Fragment>This will be shown when "condition1" is true</React.Fragment>
+      ) : condition2 ? (
+        <React.Fragment>This will be shown when "condition2" is true</React.Fragment>
+      ) : (
+        <React.Fragment>
+          This will be shown when both "condition1" and "condition2" are false
+        </React.Fragment>
+      )}
+      {/* component code... */}
+    </div>
+  );
 }
 ```
 
