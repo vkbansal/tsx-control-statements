@@ -3851,8 +3851,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite@3.2.8(@types/node@18.7.23):
-    resolution: {integrity: sha512-EtQU16PLIJpAZol2cTLttNP1mX6L0SyI0pgQB1VOoWeQnMSvtiwovV3D6NcjN8CZQWWyESD2v5NGnpz5RvgOZA==}
+  /vite@3.2.10(@types/node@18.7.23):
+    resolution: {integrity: sha512-Dx3olBo/ODNiMVk/cA5Yft9Ws+snLOXrhLtrI3F4XLt4syz2Yg8fayZMWScPKoz12v5BUv7VEmQHnsfpY80fYw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -3919,7 +3919,7 @@ packages:
       tinybench: 2.1.5
       tinypool: 0.3.0
       tinyspy: 1.0.2
-      vite: 3.2.8(@types/node@18.7.23)
+      vite: 3.2.10(@types/node@18.7.23)
     transitivePeerDependencies:
       - less
       - sass
